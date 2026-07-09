@@ -21,8 +21,8 @@ Reverse-engineered from real internal correspondence patterns (2018–2026): fon
 
 Every agent here is named after a real personality trait, not a generic function name like `formatter-agent` or `compliance-checker`.
 
-- **Aisyah** is named after the person who always corrects the author's documents' formatting — obviously.
-- **Ijah** is named after a relative who always gets asked which Pekeliling applies to something. This agent is revenge: now she does that job digitally instead.
+- **Aisyah** is named after the person who always corrects the author's everything. Now she can corrects the documents' formatting digitally.
+- **Ijah** is named after a relative who always asking about which Pekeliling applies to something. This agent is a revenge: now she does that job digitally instead.
 
 If you extend this toolkit, keep the tradition — name your agent after a real trait or person in your life (with their blessing), and note why in your own fork's README. It keeps agents feeling like colleagues you're delegating to, not tools you're invoking.
 
