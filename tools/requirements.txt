@@ -1,0 +1,4 @@
+paddlepaddle==3.2.2
+paddleocr[doc-parser]
+beautifulsoup4
+lxml

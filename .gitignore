@@ -1,0 +1,11 @@
+# Never commit the local database or decision log (may contain your real working decisions)
+manifest.json
+text/
+*.pdf
+tools/.venv/
+tools/cache/
+tools/*.log
+tools/text_audit.json
+tools/homepage_snapshot.html
+00 - Log Rujukan*
+__pycache__/
