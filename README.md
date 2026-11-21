@@ -15,8 +15,8 @@ Reverse-engineered from real internal correspondence patterns (2018–2026): fon
 | Skill | `kertas-pertimbangan-mof` | Policy consideration-paper structure — the mature 6-para skeleton (adds DASAR SEMASA + ULASAN) |
 | Skill | `pekeliling-perbendaharaan-lookup` | Database layout, search method, in-force status checks, source priority and citation-confidence rules for finding the right circular |
 | Agent | **Aisyah** | Reviews a draft against the house style — formatting, font, spacing, tables, honorifics, language |
-| Agent | **Ijah** | Finds which Pekeliling Perbendaharaan (all 7 bidang: PB, PK, WP, AM, PS, PA, LB) / Arahan Perbendaharaan applies to an issue, checks it is still in force, quotes the clause with page citation, and proposes pathway options with pros/cons |
-| Tools | `tools/` | Free, fully local pipeline that mirrors the Portal Pekeliling Perbendaharaan and extracts full text (pdftotext + PaddleOCR for scanned pages) |
+| Agent | **Ijah** | Starts from the governing Arahan Perbendaharaan (AP), then finds the Pekeliling Perbendaharaan (all 7 bidang: PB, PK, WP, AM, PS, PA, LB) that implement it, checks it is still in force, quotes the clause with page citation, and proposes pathway options with pros/cons |
+| Tools | `tools/` | Free, fully local pipeline that mirrors the Arahan Perbendaharaan (mof.gov.my) and the Portal Pekeliling Perbendaharaan and extracts full text (pdftotext + PaddleOCR for scanned pages) |
 
 ## Naming convention: why "Aisyah" and "Ijah"?
 
@@ -54,14 +54,14 @@ cp mof-writing-crew/codex/agents/*.toml ~/.codex/agents/
 
 Ijah and its skill (`pekeliling-perbendaharaan-lookup`) use a placeholder, `<PEKELILING_FOLDER>`. That is the local folder holding the Pekeliling database. Before first use:
 
-1. Choose a folder, e.g. `~/Pekeliling`. Copy `tools/` into it and build the database by following [`tools/README.md`](tools/README.md). This mirrors the **current** circulars from https://ppp.treasury.gov.my/, arranged by bidang and topic as on the portal, and extracts the full text of every page into `text/*.md` with page markers. It runs entirely on your own machine, with no paid OCR service.
+1. Choose a folder, e.g. `~/Pekeliling`. Copy `tools/` into it and build the database by following [`tools/README.md`](tools/README.md). This downloads the full Arahan Perbendaharaan with its amendments from mof.gov.my and mirrors the **current** circulars from https://ppp.treasury.gov.my/, arranged by bidang and topic as on the portal, and extracts the full text of every page into `text/*.md` with page markers. It runs entirely on your own machine, with no paid OCR service.
 2. Find-and-replace `<PEKELILING_FOLDER>` with that folder's absolute path in `~/.claude/agents/ijah.md` and `~/.claude/skills/pekeliling-perbendaharaan-lookup/SKILL.md` (for Codex, also `~/.codex/agents/ijah.toml`).
 3. Re-run `download.py` → `text_audit.py` → `extract.py` from time to time to pick up new or amended circulars. Unchanged files are skipped. Ijah tells you the database snapshot date in every answer, and checks the portal's Makluman Terkini when the snapshot is more than 30 days old.
 4. Ijah will create and maintain a running decision log at `<PEKELILING_FOLDER>/00 - Log Rujukan Pekeliling & Keputusan.md` — every issue it researches gets logged there so future sessions don't repeat the same research and stay consistent with precedent.
 
 **This log file will contain your own real working decisions — keep it in a private location, not a public repo.** The repo's `.gitignore` excludes the database, extracted text and log in case you build them inside a clone.
 
-**What Ijah does with the database:** searches the full text (not filenames) across every bidang the issue touches, and reads the whole page before quoting. It checks each instrument's status (berkuat kuasa / dipinda / dibatalkan) against later Surat Edaran. When a key figure comes from a scanned page, it renders that page and checks the number against the image. Citations take the form *PK 2.5 Kontrak Pusat, perenggan 4.2, ms 6*. Arahan Perbendaharaan itself isn't on the portal, so it is looked up from official web sources.
+**What Ijah does with the database:** reasons top-down (Akta Tatacara Kewangan 1957 → **Arahan Perbendaharaan first** → Pekeliling Perbendaharaan → Surat Edaran). It always identifies and quotes the governing AP paragraph before any Pekeliling, and checks the AP amendment notices. It searches the full text (not filenames) across every bidang the issue touches, and reads the whole page before quoting. It checks each instrument's status (berkuat kuasa / dipinda / dibatalkan) against later Surat Edaran. When a key figure comes from a scanned page, it renders that page and checks the number against the image. Citations take the form *PK 2.5 Kontrak Pusat, perenggan 4.2, ms 6*. Since the AP isn't on the portal, `tools/scripts/add_ap.py` fetches it from mof.gov.my.
 
 ## ⚠️ Disclaimer
 

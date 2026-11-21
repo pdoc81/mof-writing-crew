@@ -1,13 +1,14 @@
 # Pekeliling database tools
 
-Builds the local database Ijah searches: a mirror of the **current** circulars on the
-Portal Pekeliling Perbendaharaan (https://ppp.treasury.gov.my/), arranged by bidang and topic
-exactly as the portal, plus full text of every page.
+Builds the local database Ijah searches: the full **Arahan Perbendaharaan** (from mof.gov.my, with its
+amendments) plus a mirror of the **current** circulars on the Portal Pekeliling Perbendaharaan
+(https://ppp.treasury.gov.my/), arranged by bidang and topic as the source sites, plus full text of every page.
 
 ```
 <PEKELILING_FOLDER>/
 ├── manifest.json                         # one record per document (bidang, topic, title, portal URL, sha256, downloaded_at)
 ├── PK - Perolehan Kerajaan/02 - KAEDAH PEROLEHAN KERAJAAN/09 - SEBUT HARGA.pdf
+├── AP - Arahan Perbendaharaan/...       # main book + Surat Edaran Pindaan + amended AP text
 ├── ...                                   # PB, PK, WP, AM, PS, PA, LB
 ├── text/<same path>.md                   # front matter + <!-- page N (text|ocr) --> markers
 └── tools/                                # this folder (scripts, OCR cache, logs)
@@ -34,11 +35,17 @@ Run each script with `.venv/bin/python -I scripts/<name>.py`:
    curl -sL https://ppp.treasury.gov.my/ -o homepage_snapshot.html
    .venv/bin/python -I scripts/build_manifest.py homepage_snapshot.html <PEKELILING_FOLDER>/manifest.json
    ```
+   Then add the Arahan Perbendaharaan (as bidang `AP`):
+   ```bash
+   curl -sL -A Mozilla/5.0 https://www.mof.gov.my/portal/ms/arahan-perbendaharaan -o mof_ap_snapshot.html
+   .venv/bin/python -I scripts/add_ap.py mof_ap_snapshot.html <PEKELILING_FOLDER>
+   ```
+   Re-run `add_ap.py` after every `build_manifest.py`, because the manifest rebuild drops the AP entries.
 2. **Download**: `scripts/download.py <PEKELILING_FOLDER>`. It can be re-run: files whose sha256 hasn't changed are skipped. It downloads one file every 0.5 s to be polite to the server.
 3. **Audit**: `scripts/text_audit.py <PEKELILING_FOLDER>`. Checks every PDF opens and lists the pages that have no text layer (scanned) in `tools/text_audit.json`.
 4. **Extract**: `scripts/extract.py <PEKELILING_FOLDER>`. Uses `pdftotext -layout` for text pages and PaddleOCR PP-StructureV3 for scanned pages, so tables come out as HTML tables. Writes `text/*.md`. Each OCR'd page is cached in `tools/cache/ocr/<sha256>/`, so the run can be resumed. Options: `--limit-pages N` for a test run, `--only <substring>` for one bidang or file.
 
-Typical portal snapshot (Nov 2026): 252 documents, ~7,400 pages, ~12% scanned. With oneDNN on, OCR runs at about 5 s per page on a 20-core CPU.
+Typical snapshot (Nov 2026): 252 portal documents + 16 AP documents, ~7,650 pages, ~13% scanned. With oneDNN on, OCR runs at about 5 s per page on a 20-core CPU.
 
 ## Gotchas
 
