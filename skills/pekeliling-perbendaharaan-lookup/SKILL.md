@@ -29,7 +29,7 @@ The AP is the basis of every government financial process: belanjawan, terimaan,
 
 ## 1. The local database
 
-Root: `<PEKELILING_FOLDER>/`. It holds the full AP plus a mirror of the **current** circulars on the portal (no Arkib).
+Root: `<PEKELILING_FOLDER>/`. It holds the full AP plus a mirror of the **current** circulars on the portal (no Arkib). It is either built locally with the `tools/` pipeline (PDFs + text) or cloned from the text-only repo https://github.com/pdoc81/pekeliling-perbendaharaan-text (`text/` + `manifest.json`, no PDFs). Both have the same layout.
 
 | Kod | Bidang | Source |
 |---|---|---|
@@ -44,7 +44,7 @@ Root: `<PEKELILING_FOLDER>/`. It holds the full AP plus a mirror of the **curren
 
 | Path | What it is |
 |---|---|
-| `<KOD> - <Bidang>/<NN - Topik>/<NN - Tajuk>.pdf` | Original PDFs, arranged as the source site does. Topic `00` is Surat Edaran or Makluman Terkini. |
+| `<KOD> - <Bidang>/<NN - Topik>/<NN - Tajuk>.pdf` | Original PDFs, arranged as the source site does. Topic `00` is Surat Edaran or Makluman Terkini. **Absent in a text-only clone**; fetch from `source_url` when needed (see below). |
 | `text/<same path>.md` | Full text of each PDF. **Search and read these.** |
 | `manifest.json` | One record per document: `bidang`, `topic`, `label`, `title`, `url`, `local_path`, `sha256`, `downloaded_at` |
 | `tools/` | Download and OCR scripts. Never edit them. |
@@ -117,6 +117,15 @@ If a number you will rely on (threshold, rate, amount, date, AP, circular or par
 pdftoppm -f N -l N -r 150 -png "<PEKELILING_FOLDER>/<pdf path>" /tmp/ijah_pN
 ```
 
+If the PDF isn't in the folder (text-only clone), download the official copy from the file's `source_url` front matter to `/tmp` first. The portal adds a stray newline before `%PDF`, so strip it:
+
+```bash
+curl -sL "<source_url>" | sed '1{/^\r\?$/d}' > /tmp/ijah_doc.pdf
+pdftoppm -f N -l N -r 150 -png /tmp/ijah_doc.pdf /tmp/ijah_pN
+```
+
+If it still won't open, check its sha256 against the front matter and fall back to the unchecked-OCR wording below.
+
 Read the resulting PNG and confirm the figure, then label it `[DISAHKAN — Fail Tempatan (OCR, disemak imej)]`. If you couldn't check the image, say the figure is from OCR and unchecked.
 
 ### Checking whether an instrument is still in force (mandatory)
@@ -129,7 +138,7 @@ For every AP paragraph and Pekeliling you cite:
 - If several versions exist, cite the one with the latest effective date and say what it replaced.
 - State the status: *Berkuat kuasa sejak …* / *Dipinda oleh … (tarikh)* / *Perenggan X dibatalkan oleh …* / *Dibatalkan*.
 
-**Freshness rule.** Check `downloaded_at` in `manifest.json`. If the snapshot is more than 30 days old, **or** the issue depends on a threshold or rate, check the portal's "Makluman Terkini" (https://ppp.treasury.gov.my/) and the MOF AP page for anything newer before finalising. Tell the user the snapshot date either way.
+**Freshness rule.** Check `downloaded_at` in `manifest.json`. If the snapshot is more than 30 days old, **or** the issue depends on a threshold or rate, check the portal's "Makluman Terkini" (https://ppp.treasury.gov.my/) and the MOF AP page for anything newer before finalising. Tell the user the snapshot date either way. If the folder is a git clone of the text repo and the snapshot is old, suggest `git pull` (never run it yourself).
 
 ### Step 3: Official web sources (gaps and freshness)
 

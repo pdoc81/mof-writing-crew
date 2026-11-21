@@ -4,6 +4,8 @@ Builds the local database Ijah searches: the full **Arahan Perbendaharaan** (fro
 amendments) plus a mirror of the **current** circulars on the Portal Pekeliling Perbendaharaan
 (https://ppp.treasury.gov.my/), arranged by bidang and topic as the source sites, plus full text of every page.
 
+**You don't need to run this to use Ijah.** A ready-made snapshot of the text is published at https://github.com/pdoc81/pekeliling-perbendaharaan-text. Use these tools to rebuild it yourself, keep the PDFs locally, or produce a newer snapshot. To publish a refresh, commit the changed `text/` and `manifest.json` in that repo; `git diff` then shows exactly which circulars changed.
+
 ```
 <PEKELILING_FOLDER>/
 ├── manifest.json                         # one record per document (bidang, topic, title, portal URL, sha256, downloaded_at)
