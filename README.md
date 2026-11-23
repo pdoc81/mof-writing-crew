@@ -68,6 +68,8 @@ Ijah searches a local database: the full text of the Arahan Perbendaharaan and e
 3. Run `cd ~/Pekeliling && git pull` from time to time to get newer snapshots. Ijah tells you the snapshot date in every answer, and checks the portal's Makluman Terkini when the snapshot is more than 30 days old.
 4. Ijah creates and maintains a running decision log at `<PEKELILING_FOLDER>/00 - Log Rujukan Pekeliling & Keputusan.md`. Every issue it researches is logged there so future sessions don't repeat the same research and stay consistent with precedent.
 
+5. Optional: put your ministry's **Penetapan Kuasa dan Tugas Pegawai Pengawal** (internal delegation of powers, e.g. AP 168 keizinan perolehan, AP 176 ITPK) in `<PEKELILING_FOLDER>/Penetapan Kuasa KSP/`, with the scanned PDFs and a checked transcription named `PENETAPAN KUASA DAN TUGAS KSP (<tarikh>).md`. Ijah will then also tell you which officer may approve and up to what amount. The text repo's `.gitignore` keeps that folder out of commits, so the internal circular stays on your machine.
+
 The text clone has no PDFs. When Ijah needs to check a figure from a scanned (OCR) page against the original image, it downloads that one official PDF from the `source_url` in the file's front matter.
 
 **The decision log will contain your own real working decisions. Keep it private.** The text repo's `.gitignore` ignores everything except `text/`, `manifest.json` and its README, so the log can't be committed by accident, and this repo's `.gitignore` excludes it too.

@@ -14,7 +14,12 @@ Akta Tatacara Kewangan 1957 [Akta 61]        ← the Act; AP 4 cites seksyen 4
   └─ Arahan Perbendaharaan (AP)              ← the governing rule: who may approve, what is required
        └─ Pekeliling Perbendaharaan (PB/PK/WP/AM/PS/PA/LB)   ← tatacara pelaksanaan: thresholds, methods, forms
             └─ Surat Edaran / Makluman Terkini / garis panduan  ← amendments, exemptions, clarifications
+
+Alongside the AP, on "who signs":
+Penetapan Kuasa dan Tugas Pegawai Pengawal (AP 11, s.15A(2) Akta 61)  ← which officer exercises the Pegawai Pengawal's power, and up to what amount
 ```
+
+The Penetapan Kuasa does not change what the AP or Pekeliling require. It answers a separate question: **in this ministry, which officer may approve this on the Pegawai Pengawal's behalf, and up to what amount** (see §1, "Penetapan Kuasa Pegawai Pengawal").
 
 The AP is the basis of every government financial process: belanjawan, terimaan, bayaran, perolehan, aset, perakaunan, audit, hapus kira. Pekeliling Perbendaharaan carry out what the AP requires, and many AP paragraphs say so explicitly ("tertakluk kepada … Pekeliling Perbendaharaan yang berkuat kuasa").
 
@@ -25,7 +30,8 @@ The AP is the basis of every government financial process: belanjawan, terimaan,
 4. In the output and in suggested kertas text, the AP basis comes first, e.g. *"Selaras dengan AP 168 … dan tatacara pelaksanaannya di bawah PK 2.9 …"*.
 5. If no AP paragraph governs the matter, say so explicitly ("Tiada AP khusus; diatur sepenuhnya oleh PK x.x"). Do not skip the step silently.
 6. **Exceptions follow the AP route.** Any departure from AP or Pekeliling needs prior KSP (Ketua Setiausaha Perbendaharaan) approval, or Pegawai Kewangan Negeri approval for a State (AP 168). Flag this whenever an option departs from the standard rules.
-7. **If the AP and a later Pekeliling name different bodies or older terms,** quote both and explain. Example: AP 287(a) names MAMPU for ICT procurement, while PK 2.1 para 5.16 names Jabatan Digital Negara. Never silently pick one.
+7. **Name the approving officer.** Whenever an AP or Pekeliling gives a power to the Pegawai Pengawal and a Penetapan Kuasa is held locally (§1), check it and state which officer exercises the power and the had amaun. If the task or amount is not in the jadual, the power stays with the Pegawai Pengawal: say so. Exceptions under the second sentence of AP 168 are **not** delegated by a jadual and still need the KSP (or Pegawai Kewangan Negeri).
+8. **If the AP and a later Pekeliling name different bodies or older terms,** quote both and explain. Example: AP 287(a) names MAMPU for ICT procurement, while PK 2.1 para 5.16 names Jabatan Digital Negara. Never silently pick one.
 
 ## 1. The local database
 
@@ -76,6 +82,15 @@ Each `text/*.md` starts with YAML front matter (`bidang`, `topic`, `title`, `lab
 | Bab C II Kehilangan dan Hapus Kira | AP 314–328 | Kehilangan, hapus kira, bayaran lebih |
 
 Use the ranges to start looking, then confirm by reading the text. Treat paragraphs marked `[Dimansuhkan]` or `[Arahan dipindahkan ke …]` as such: cite where the rule moved, never the empty number.
+
+### Penetapan Kuasa Pegawai Pengawal (internal, optional)
+
+If `<PEKELILING_FOLDER>/Penetapan Kuasa KSP/` exists, it holds your ministry's internal delegation of Pegawai Pengawal powers to Pegawai Perakaunan (Penetapan Kuasa dan Tugas Pegawai Pengawal, made under s.15A(2) Akta 61 and AP 11; format SPANM Bil. 4/2024: a surat litup, Lampiran B3, plus one Jadual, Lampiran B1, per PTJ). Typical entries are AP 168 keizinan membuat perolehan and pembelian terus, PK 7 pengecualian (e.g. PK 7.3 penyertaan latihan), and AP 176 bayaran melalui Invois Tanpa Pesanan Kerajaan (ITPK).
+
+- The scans are kept with a checked transcription, `PENETAPAN KUASA DAN TUGAS KSP (<tarikh>).md`, whose figures were confirmed against the page images. Read that file for the officers and had amaun. If you rely on a figure that isn't in it, render the PDF page and check it.
+- **Never quote officers or amounts from memory or from this skill.** A new Penetapan Kuasa is issued whenever the Pegawai Pengawal changes or the delegation is revised, and it cancels the earlier one. If the folder holds more than one set, use the one with the latest *berkuat kuasa* date and say what it replaced.
+- Cite it as *Penetapan Kuasa dan Tugas Pegawai Pengawal, ruj. …, berkuat kuasa …, Jadual Lampiran B1, Bil. …*, labelled `[DISAHKAN — Fail Tempatan (OCR, disemak imej)]`.
+- This is an internal document: keep it in the local folder, never in a public repo.
 
 **Not in the database:** Akta Tatacara Kewangan 1957 itself, Pekeliling Perkhidmatan, archived or repealed circulars (Arkib), and anything issued after `downloaded_at`. Look those up on the web (Step 2).
 
@@ -168,6 +183,7 @@ If nothing relevant can be found or verified, say so plainly. Never invent an AP
 1. **Isu/Keperluan**: a one-line restatement, plus the bidang involved.
 2. **Asas Arahan Perbendaharaan**: the governing AP paragraph(s), each quoted, with status and label. This always comes first.
 3. **Pekeliling dan tatacara pelaksanaan**: the Pekeliling, Surat Edaran and garis panduan that implement the AP, each with status, quoted clause, page and label.
+3A. **Pihak Berkuasa Melulus**: from the Penetapan Kuasa, the officer who may approve and the had amaun, or "kekal pada Pegawai Pengawal" if the task or amount is outside the jadual. Omit only if no Penetapan Kuasa is held locally, and say so.
 4. **Pilihan laluan (2–4)**: genuinely distinct pathways, each with Kelebihan, Kekurangan/Risiko, the relevant cited threshold, and, where it departs from the rules, the AP 168 exception route (prior KSP approval).
 5. **Cadangan**: the most defensible pathway and why, or an honest toss-up.
 6. **Cadangan teks (optional)**: a ready-to-paste DASAR SEMASA or justification paragraph in house style (see `mof-house-style`). **Open with the AP basis, then the Pekeliling.**
@@ -177,4 +193,4 @@ This slots straight into the **DASAR SEMASA** and **ULASAN** sections of `kertas
 
 ## 5. Files this workflow writes
 
-Only `<PEKELILING_FOLDER>/00 - Log Rujukan Pekeliling & Keputusan.md` (append-only), plus throwaway page images under `/tmp`. Never modify the PDFs, `text/`, `manifest.json`, or `tools/`.
+Only `<PEKELILING_FOLDER>/00 - Log Rujukan Pekeliling & Keputusan.md` (append-only), plus throwaway page images under `/tmp`. Never modify the PDFs, `text/`, `manifest.json`, `tools/`, or `Penetapan Kuasa KSP/`.
