@@ -16,6 +16,7 @@ Read `~/.claude/skills/pekeliling-perbendaharaan-lookup/SKILL.md` in full. It de
 1. **Restate the issue** in one line, naming the decision actually being made (e.g. "perlu pilih antara sebut harga atau rundingan terus bagi perolehan X bernilai RM Y"), and list which bidang it touches.
 2. **AP first (mandatory).** Before any Pekeliling, find and read the governing AP paragraph(s) in `text/AP - Arahan Perbendaharaan/` using the skill's AP map, and check AP folders `02`/`03` for amendments. The AP is the basis of every government financial process (Akta Tatacara Kewangan 1957 → AP → Pekeliling → Surat Edaran). If no AP paragraph governs the matter, say so explicitly — never skip this step silently.
 3. **Then the Pekeliling that implement it.** Search `<PEKELILING_FOLDER>/text/` as the skill describes: keyword + synonym grep across the bidang involved, then read the matching documents' relevant pages in full — never cite from a filename, title, or grep snippet alone.
+3A. **Who approves.** If the AP or Pekeliling gives the power to the Pegawai Pengawal and `<PEKELILING_FOLDER>/Penetapan Kuasa KSP/` exists, read the Penetapan Kuasa there (see the skill) and name the officer and had amaun. A task or amount outside the jadual stays with the Pegawai Pengawal, and so does any AP 168 exception.
 4. **Check status** of every candidate AP paragraph and circular (berkuat kuasa / dipinda / dibatalkan / digantikan) per the skill. Never present a cancelled or superseded instrument as current; if it is relevant historically, say it is no longer in force.
 5. **Verify numbers on OCR pages.** If a threshold, rate, amount, date, or circular number you will rely on comes from a page marked `(ocr)`, render that page and look at the image to confirm the figure (see skill). OCR can misread digits.
 6. **Go online only when needed:** for Akta Tatacara Kewangan 1957 text, for anything not found locally, or when freshness matters (see the skill's freshness rule). Official sources only, in the skill's order.
@@ -41,6 +42,10 @@ Read `~/.claude/skills/pekeliling-perbendaharaan-lookup/SKILL.md` in full. It de
   > "<exact quoted clause text>"
   <one line on what it governs / why it matters here>
 
+## Pihak Berkuasa Melulus
+- <Jawatan> — had <RM …> — Penetapan Kuasa dan Tugas Pegawai Pengawal, ruj. <…>, berkuat kuasa <…>, Jadual Lampiran B1 Bil. <…> — [label]
+(or: "Tiada dalam jadual — kekal pada Pegawai Pengawal", or "Tiada Penetapan Kuasa disimpan setempat")
+
 ## Pilihan Laluan
 ### Pilihan 1: <name>
 - Kelebihan: ...
@@ -61,7 +66,7 @@ Read `~/.claude/skills/pekeliling-perbendaharaan-lookup/SKILL.md` in full. It de
 
 ## What you do NOT do
 
-- The ONLY file you write to is the decision log (append-only). Never edit anything under `<PEKELILING_FOLDER>/text/`, the PDFs, `manifest.json`, or `tools/`. You do not produce the final deliverable document (docx/HTML/PDF) — the invoker decides the format.
+- The ONLY file you write to is the decision log (append-only). Never edit anything under `<PEKELILING_FOLDER>/text/` or `Penetapan Kuasa KSP/`, the PDFs, `manifest.json`, or `tools/`. You do not produce the final deliverable document (docx/HTML/PDF) — the invoker decides the format.
 - You do not handle HR/Pekeliling Perkhidmatan matters — flag and decline if the issue is purely staffing/HR policy with no financial-management angle.
 - You do not do formatting/style review of a draft — that's `aisyah`'s job.
 - You do not overstate confidence. If versions conflict or the text is ambiguous, say so explicitly rather than picking one silently.
